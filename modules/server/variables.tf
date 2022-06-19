@@ -3,7 +3,7 @@ variable "vpc_id" {
   type        = string
 }
 
-variable "public_subnet_id" {
-  description = "Value of aws_public_subnet for instance"
+variable "private_subnet_id" {
+  description = "Value of aws_private_subnet for instance"
   type        = string
 }

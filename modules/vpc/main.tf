@@ -71,8 +71,21 @@ resource "aws_route_table_association" "associate_public_subnet" {
   route_table_id = aws_route_table.public_route_table.id
 }
 
+
 resource "aws_eip" "elastic" {
   vpc = true
+
+  tags = {
+    Name = "eip-1"
+  }
+}
+
+resource "aws_eip" "elastic_lb" {
+  vpc = true
+
+  tags = {
+    Name = "eip-lb"
+  }
 }
 
 resource "aws_nat_gateway" "nat_gateway" {
@@ -98,7 +111,7 @@ resource "aws_subnet" "private_subnet" {
   vpc_id     = aws_vpc.main.id
   cidr_block = var.aws_subnet_private_cidr
 
-  availability_zone_id = "use1-az2"
+  availability_zone_id = "use1-az1"
 
   tags = {
     Name = "private_subnet"

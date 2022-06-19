@@ -39,7 +39,7 @@ resource "aws_instance" "demo_instance" {
   ami                    = "ami-052efd3df9dad4825" # ubuntu 22.04
   instance_type          = "t2.micro"
   vpc_security_group_ids = [aws_security_group.demo_sg.id]
-  subnet_id              = var.public_subnet_id
+  subnet_id              = var.private_subnet_id
 
   user_data = <<-EOF
     #! /bin/bash
@@ -60,6 +60,12 @@ resource "aws_instance" "demo_instance" {
 
     sudo docker pull nginx
     sudo docker run --name demo_nginx -p 80:80 -v $HOME/index.html:/usr/share/nginx/html/index.html -d nginx
+
+    sudo sed -i 's/PasswordAuthentication no/PasswordAuthentication yes/g' /etc/ssh/sshd_config
+    sudo systemctl restart sshd
+    sudo useradd -m merq -s /bin/bash
+    sudo echo 'merq:Welcome@merq' | chpasswd
+    sudo usermod -aG sudo merq
   EOF
 
   tags = {
