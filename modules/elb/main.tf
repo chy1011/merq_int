@@ -15,11 +15,12 @@ resource "aws_lb" "demo_lb" {
 }
 
 resource "aws_lb_target_group" "demo_lb_http_target_group" {
-  name        = "aws-http-target-group"
-  port        = "80"
-  protocol    = "TCP"
-  target_type = "instance"
-  vpc_id      = var.aws_vpc_id
+  name               = "aws-http-target-group"
+  port               = "80"
+  protocol           = "TCP"
+  target_type        = "instance"
+  vpc_id             = var.aws_vpc_id
+  preserve_client_ip = false
 
   health_check {
     enabled = true
